@@ -17,6 +17,6 @@ set sqlblanklines on
 
 -- Kick off Liquibase
 prompt "Installing/updating schemas"
-lb changelog-sync -log -changelog-file releases/main.changelog.xml -search-path "."
+lb update -log -changelog-file releases/main.changelog.xml -search-path "."
 
 --@utils/recompile.sql
