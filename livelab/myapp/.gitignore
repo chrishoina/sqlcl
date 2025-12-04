@@ -1,0 +1,46 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist-ssr
+*.local
+.env
+.ipynb_checkpoints
+
+# Editor directories and files
+.DS_Store
+
+/.env
+/.env.*
+!/.env.example
+!/.env.*.example
+/server/utils/db/wallet# Oracle SQLcl Projects
+artifact/*
+var/*
+*.tar.gz
+*.tz
+*.zip
+*.log
+**/.DS_Store
+# Oracle SQLcl Projects
+artifact/*
+var/*
+*.tar.gz
+*.tz
+*.zip
+*.log
+**/.DS_Store
+# Oracle SQLcl Projects
+artifact/*
+var/*
+*.tar.gz
+*.tz
+*.zip
+*.log
+**/.DS_Store
