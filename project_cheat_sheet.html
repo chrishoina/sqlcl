@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Project Command Cheat Sheet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap" rel="stylesheet">
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({ startOnLoad: true });
+</script>
+<style>
+:root {
+  --background: #fafbfc;
+  --card-bg: #ffffff;
+  --border: #e0e0e0;
+  --table-header: #f4f4f4;
+  --subheading: #242424;
+  --required: #c93c3c;
+  --code-bg: #f4f4f4;
+  --code-color: #232323;
+  --shadow: 0 1px 5px rgba(30,30,30,0.04);
+}
+body {
+  font-family: 'Roboto Flex', 'Inter', 'Segoe UI', 'Roboto', sans-serif;
+  margin: 2em;
+  background: var(--background);
+  font-size: 17px;
+  color: #191919;
+}
+h1 {
+  color: #000;
+  font-size: 2.2em;
+  margin-bottom: 0.5em;
+  margin-top: 0.6em;
+  line-height: 1.15;
+  word-break: break-word;
+  letter-spacing: 0.01em;
+}
+.section-subheading {
+  font-size: 1.2em;
+  font-weight: 600;
+  margin-top: 1.5em;
+  margin-bottom: 0.9em;
+  letter-spacing: 0.015em;
+  color: var(--subheading);
+}
+/* Main Commands - grid-based, for regular table look */
+.columns-wrapper {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2em;
+  grid-auto-flow: dense;
+  align-items: flex-start;
+  margin-bottom: 2em;
+}
+/* Help Commands - masonry layout using CSS columns */
+.help-columns {
+  columns: 3;
+  column-gap: 2em;
+  margin-bottom: 2em;
+}
+@media (max-width: 1300px) {
+  .columns-wrapper { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .help-columns { columns: 2; }
+  h1 { font-size: 1.7em; }
+  .section-subheading { font-size: 1.11em; }
+}
+@media (max-width: 900px) {
+  .columns-wrapper { grid-template-columns: 1fr; }
+  .help-columns { columns: 1; }
+  h1 { font-size: 1.1em; }
+  .section-subheading { font-size: .97em; }
+  .command-block, .help-columns .command-block {
+    padding: 1em 0.6em;
+    margin-bottom: 1.08em;
+    font-size: 0.99em;
+  }
+  pre, code { font-size: .95em; }
+}
+@media (max-width: 550px) {
+  body { font-size: 13px; margin: 0.5em; }
+  .command-block, .help-columns .command-block { padding: 0.5em 0.25em; }
+  table { font-size: 10px; min-width: 120px;}
+}
+.help-columns .command-block {
+  display: inline-block;
+  width: 100%;
+  vertical-align: top;
+  margin-bottom: 1.5em;
+  box-sizing: border-box;
+  padding: 1.05em 1em 1em 1.18em;
+  font-size: .98em;
+}
+/* Command block cards */
+.command-block {
+  background: var(--card-bg);
+  border-left: 3px solid var(--border);
+  box-shadow: var(--shadow);
+  padding: 1.4em 1.1em 1.1em 1.7em;
+  margin-bottom: 1.5em;
+  min-width: 0;
+  border-radius: 11px;
+  word-break: break-word;
+  transition: box-shadow 0.14s;
+}
+.command-block h2, .command-block h3 {
+  margin-top: 0;
+  font-size: 1.13em;
+  color: #000;
+  line-height: 1.19;
+  letter-spacing: 0.008em;
+}
+.required {
+  color: var(--required);
+  font-weight: bold;
+  margin-bottom: .3em;
+  font-size: 1em;
+}
+.section-title {
+  font-weight: bold;
+  margin-top: 1em;
+  color: var(--subheading);
+}
+
+/* --- CODE and PRE IMPROVEMENTS --- */
+code {
+  background: var(--code-bg);
+  color: var(--code-color);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: 'JetBrains Mono', 'Fira Mono', 'Menlo', 'Consolas', monospace;
+  font-size: 1em;
+  letter-spacing: 0.06em;
+  word-break: break-word;
+  white-space: pre-wrap;
+  margin-top: 0.18em;
+  margin-bottom: 0.18em;
+}
+pre {
+  background: var(--code-bg);
+  color: var(--code-color);
+  padding: 0.5em 0.8em;
+  border-radius: 4px;
+  font-size: .98em;
+  font-family: 'JetBrains Mono', 'Fira Mono', 'Menlo', 'Consolas', monospace;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin-top: 0.85em;
+  margin-bottom: 0.85em;
+  display: block;
+}
+pre code {
+  background: none;
+  padding: 0;
+  border-radius: 0;
+  font-size: inherit;
+  color: inherit;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+/* Margin for inline code - don't space too much inside paragraphs/lists/cells */
+p > code, li > code, td > code {
+  margin-top: 0.10em;
+  margin-bottom: 0.10em;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+/* Table stretches to container width, responsive */
+table {
+  font-size: 12px;
+  background: var(--card-bg);
+  min-width: 300px;
+  width: 100%;
+  margin-top: 0.5em;
+  border-radius: 5px;
+  table-layout: auto;
+}
+th:first-child, td:first-child {
+  white-space: nowrap;
+}
+th, td {
+  text-align: left;
+  padding: 4px 8px;
+  font-family: 'JetBrains Mono', 'Fira Mono', 'Menlo', 'Consolas', monospace;
+  word-break: break-word;
+  hyphens: auto;
+}
+@media (max-width: 700px) {
+  .settings-table-wrapper {
+    overflow-x: auto;
+    max-width: 100vw;
+  }
+}
+table, th, td {
+  border: none;
+}
+dt { font-weight: bold; margin-top: 1em; margin-bottom: .25em;}
+dd { margin: 0 0 0.75em 1.5em; }
+dl {
+  margin: 0;
+  max-width: 100%;
+}
+</style>
+</head>
+<body>
+<h1>SQLcl <code>project</code> command cheat sheet</h1>
+<h2 class="section-subheading main-commands-heading">Main Commands</h2>
+<div class="columns-wrapper">
+<!-- COLUMN 1 -->
+<div>
+<div class="command-block">
+<h2><code>config</code></h2>
+<div class="required">The option 'LIST' is required and a value must be specified</div>
+<div>The <code>config</code> command is used to view and manage your project configuration properties.</div>
+<div class="section-title">Usage:</div>
+<pre>project|proj  config|cfg {SUBCOMMAND} {OPTIONS}</pre>
+<div class="section-title">Subcommands:</div>
+<dl>
+<dt><code>set</code> | <code>s</code></dt>
+<dd>Add a new config parameter, or update an existing one.</dd>
+<dt><code>delete</code> | <code>d</code></dt>
+<dd>Remove a config parameter from your configuration.</dd>
+</dl>
+<div class="section-title">Options:</div>
+<dl>
+<dt><code>-list</code> | <code>-li</code> <span class="required">[required]</span></dt>
+<dd>
+          List your current configuration settings.
+<div style="margin-top: 1em;" class="settings-table-wrapper">
+<table>
+<colgroup>
+<col style="min-width: 25px">
+<col style="min-width: 25px">
+</colgroup>
+<tbody>
+<tr>
+<th>Setting</th>
+<th>Value (default)</th>
+</tr>
+<tr><td><code>project</code></td><td><code>test</code></td></tr>
+<tr><td><code>sqlcl.connectionName</code></td><td><code></code></td></tr>
+<tr><td><code>sqlcl.version</code></td><td><code>25.2.2.0</code></td></tr>
+<tr><td><code>schemas</code></td><td><code>[]</code></td></tr>
+<tr><td><code>lastReleaseVersion</code></td><td><code></code></td></tr>
+<tr><td><code>export.format.enable</code></td><td><code>true</code></td></tr>
+<tr><td><code>export.setTransform.collationClause</code></td><td><code>NEVER</code></td></tr>
+<tr><td><code>export.setTransform.constraints</code></td><td><code>true</code></td></tr>
+<tr><td><code>export.setTransform.constraintsAsAlter</code></td><td><code>true</code></td></tr>
+<tr><td><code>export.setTransform.emitSchema</code></td><td><code>true</code></td></tr>
+<tr><td><code>export.setTransform.force</code></td><td><code>true</code></td></tr>
+<tr><td><code>export.setTransform.partitioning</code></td><td><code>false</code></td></tr>
+<tr><td><code>export.setTransform.segmentAttributes</code></td><td><code>false</code></td></tr>
+<tr><td><code>export.setTransform.sizeByteKeyword</code></td><td><code>true</code></td></tr>
+<tr><td><code>export.setTransform.sqlterminator</code></td><td><code>true</code></td></tr>
+<tr><td><code>export.setTransform.storage</code></td><td><code>false</code></td></tr>
+<tr><td><code>export.setTransform.tablespace</code></td><td><code>false</code></td></tr>
+<tr><td><code>export.apex.exptype</code></td><td><code>["READABLE_YAML","APPLICATION_SOURCE"]</code></td></tr>
+<tr><td><code>export.apex.expAclAssignments</code></td><td><code>false</code></td></tr>
+<tr><td><code>export.apex.expComments</code></td><td><code>false</code></td></tr>
+<tr><td><code>export.apex.skipExportDate</code></td><td><code>true</code></td></tr>
+<tr><td><code>export.apex.expirNotif</code></td><td><code>false</code></td></tr>
+<tr><td><code>export.apex.expOriginalIds</code></td><td><code>false</code></td></tr>
+<tr><td><code>export.apex.expSavedReports</code></td><td><code>false</code></td></tr>
+<tr><td><code>export.apex.expPubReports</code></td><td><code>true</code></td></tr>
+<tr><td><code>export.apex.expSubscriptions</code></td><td><code>false</code></td></tr>
+<tr><td><code>export.apex.expSupportingObjects</code></td><td><code>N</code></td></tr>
+<tr><td><code>export.apex.expTranslations</code></td><td><code>false</code></td></tr>
+<tr><td><code>export.apex.auditType</code></td><td><code>NULL</code></td></tr>
+<tr><td><code>git.protectedBranches</code></td><td><code>["main","master"]</code></td></tr>
+<tr><td><code>git.defaultBranch</code></td><td><code>main</code></td></tr>
+<tr><td><code>stage.excludeObjects</code></td><td><code>["ALL.user"]</code></td></tr>
+<tr><td><code>stage.generatedFormat</code></td><td><code>liquibase</code></td></tr>
+</tbody>
+</table>
+</div>
+</dd>
+<dt><code>-name</code> | <code>-n</code> <code>&lt;name&gt;</code></dt>
+<dd>The config parameter name can be used when filtering or editing.</dd>
+<dt><code>-verbose</code> | <code>-v</code></dt>
+<dd>Show additional details about the current process.</dd>
+<dt><code>-debug</code> | <code>-de</code></dt>
+<dd>Enable debug information in the output.</dd>
+</dl>
+</div>
+<div class="command-block">
+<h2><code>gen-artifact</code></h2>
+<div>Generate an artifact that represents the current state of your project.</div>
+<div class="section-title">Usage:</div>
+<pre>project|proj  gen-artifact|ga {OPTIONS}</pre>
+<div class="section-title">Options:</div>
+<dl>
+<dt><code>-name</code> | <code>-n</code> <code>&lt;name&gt;</code></dt>
+<dd>Specify a custom name for the artifact.</dd>
+<dt><code>-format</code> | <code>-fo</code> <code>&lt;format&gt;</code> <span style="font-style:italic;">(zip)</span></dt>
+<dd>Choose the desired compression format: zip or tgz.</dd>
+<dt><code>-version</code> | <code>-ve</code> <code>&lt;version&gt;</code></dt>
+<dd>Specify the version for the artifact.</dd>
+<dt><code>-force</code> | <code>-f</code></dt>
+<dd>Overwrites the artifact if it exists.</dd>
+<dt><code>-verbose</code> | <code>-v</code></dt>
+<dd>Show additional details about the current process.</dd>
+<dt><code>-debug</code> | <code>-de</code></dt>
+<dd>Enable debug information in the output.</dd>
+</dl>
+</div>
+</div>
+<!-- COLUMN 2 -->
+<div>
+<div class="command-block">
+<h2><code>deploy</code></h2>
+<div class="required">The option 'FILE' is required and a value must be specified</div>
+<div>Deploy the artifact on a target database.</div>
+<div class="section-title">Usage:</div>
+<pre>project|proj  deploy|dp {OPTIONS}</pre>
+<div class="section-title">Options:</div>
+<dl>
+<dt><code>-file</code> | <code>-fs</code> <code>&lt;file&gt;</code> <span class="required">[required]</span></dt>
+<dd>Specify the path to the artifact file.</dd>
+<dt><code>-debug</code> | <code>-de</code></dt>
+<dd>Enable debug information in the output.</dd>
+<dt><code>-verbose</code> | <code>-v</code></dt>
+<dd>Show additional details about the current process.</dd>
+</dl>
+</div>
+<div class="command-block">
+<h2><code>init</code></h2>
+<div class="required">The option 'NAME' is required and a value must be specified</div>
+<div>Initialize a new project.</div>
+<div class="section-title">Usage:</div>
+<pre>project|proj  init|in {OPTIONS}</pre>
+<div class="section-title">Options:</div>
+<dl>
+<dt><code>-name</code> | <code>-n</code> <code>&lt;name&gt;</code> <span class="required">[required]</span></dt>
+<dd>Define the project name.</dd>
+<dt><code>-schemas</code> | <code>-s</code> <code>&lt;schemas&gt;</code></dt>
+<dd>Specify a comma-separated list of schemas to export, e.g., HR.</dd>
+<dt><code>-directory</code> | <code>-d</code> <code>&lt;directory&gt;</code> {PATH}</dt>
+<dd>Define the directory in which the project will be created.<br>If not specified, the project will be created in the current directory.</dd>
+<dt><code>-connection-name</code> | <code>-con</code> <code>&lt;connection-name&gt;</code></dt>
+<dd>Specify the SQLcl connection name.<br>If not provided, and you are connecting via a named connection, it will automatically add that connection name to the <code>connectionName</code> configuration property.<br>If no named connection is used, the <code>connectionName</code> property will remain empty.</dd>
+<dt><code>-makeroot</code> | <code>-mr</code></dt>
+<dd>Create a root folder named after the project and store all files in this directory.</dd>
+<dt><code>-debug</code> | <code>-de</code></dt>
+<dd>Enable debug information in the output.</dd>
+<dt><code>-verbose</code> | <code>-v</code></dt>
+<dd>Show additional details about the current process.</dd>
+</dl>
+</div>
+<div class="command-block">
+<h2><code>stage</code></h2>
+<div>Generate Liquibase changelogs and changesets for all src and custom SQL files.</div>
+<div class="section-title">Usage:</div>
+<pre>project|proj  stage|st {SUBCOMMAND} {OPTIONS}</pre>
+<div class="section-title">Subcommands:</div>
+<dl>
+<dt><code>add-custom</code> | <code>ac</code></dt>
+<dd>Add a custom file to the stage.</dd>
+</dl>
+<div class="section-title">Options:</div>
+<dl>
+<dt><code>-branch-name</code> | <code>-bn</code> <code>&lt;branch-name&gt;</code></dt>
+<dd>Specify the branch name for comparison. If not provided, the value from the configuration file (<code>git.defaultBranch</code>) will be used, with "develop" as the default.</dd>
+<dt><code>-debug</code> | <code>-de</code></dt>
+<dd>Enable debug information in the output.</dd>
+<dt><code>-verbose</code> | <code>-v</code></dt>
+<dd>Show additional details about the current process.</dd>
+</dl>
+</div>
+</div>
+<!-- COLUMN 3 -->
+<div>
+    <div class="command-block">
+        <h2><code>export</code></h2>
+            <div>The command exports database objects, resources, and/or data to your Git repository.</div>
+                <div class="section-title">Usage:</div>
+                    <pre>project|proj  export|ex {OPTIONS}</pre>
+                        <div class="section-title">Options:</div>
+                            <dl>
+                            <dt><code>-list</code> | <code>-l</code></dt>
+                            <dd>Lists all objects in alphabetical order. The list of objects to export is output based on the current parameters.</dd>
+                            <dt><code>-file</code> | <code>-fs</code> <code>&lt;file&gt;</code></dt>
+                            <dd>Specify the path to the export file.</dd>
+                            <dt><code>-type</code> | <code>-t</code> <code>&lt;type&gt;</code></dt>
+                            <dd>Type of resource/data to export (e.g., schema, data, config).</dd>
+                            <dt><code>-objects</code> | <code>-o</code><code>&lt;objects&gt;</code></dt>
+                            <dd>Specifies comma-separated list of objects to export. For example, <code>HR.COUNTRIES</code>.</dd>
+                            <dt><code>-schemas</code> | <code>-s</code><code>&lt;schemas&gt;</code></dt>
+                            <dd>Specifies a comma-separated list of schemas to export. For example, <code>HR</code>.</dd>
+                            <dt><code>-threads</code> | <code>-t</code><code>&lt;threads&gt;</code></dt>
+                            <dd>Specifies the number of concurrent threads to use with cloned JDBC connections for executing <code>DBMS_METADATA.getDDL</code>. The default value is five.</dd>
+                            <dt><code>-debug</code> | <code>-de</code></dt>
+                            <dd>Enable debug information in the output.</dd>
+                            <dt><code>-verbose</code> | <code>-v</code></dt>
+                            <dd>Show additional details about the current process, in the output..</dd>
+                            </dl>
+    </div>
+    <div class="command-block">
+        <h2><code>release</code></h2>
+            <div class="required">The option 'VERSION' is required and a value must be specified</div>
+                <div>Move the current set of work into a release state and start a new body of work.</div>
+                    <div class="section-title">Usage:</div>
+                        <pre>project|proj  release|re {OPTIONS}</pre>
+                            <div class="section-title">Options:</div>
+                                <dl>
+                                <dt><code>-version</code> | <code>-ve</code> <code>&lt;version&gt;</code> <span class="required">[required]</span></dt>
+                                <dd>Specify the version to label this release.</dd>
+                                <dt><code>-debug</code> | <code>-de</code></dt>
+                                <dd>Enable debug information in the output.</dd>
+                                <dt><code>-verbose</code> | <code>-v</code></dt>
+                                <dd>Show additional details about the current process.</dd>
+                                </dl>
+    </div>
+    <div class="command-block">
+        <h2><code>verify</code></h2>
+            <div>Test different aspects of your project, including snapshots, stages, and the overall project.</div>
+                <div class="section-title">Usage:</div>
+                    <pre>project|proj  verify|v {SUBCOMMAND} {OPTIONS}</pre>
+                        <div class="section-title">Subcommands:</div>
+                            <dl>
+                            <dt><code>verify-stage</code> | <code>st</code></dt>
+                            <dd>Execute all the verify tests registered for the stage group.</dd>
+                            <dt><code>snapshot</code> | <code>ss</code></dt>
+                            <dd>Execute all the verify tests registered for the snapshot group.</dd>
+                            </dl>
+                                <div class="section-title">Options:</div>
+                                    <dl>
+                                    <dt><code>-group</code> | <code>-gr</code> <code>&lt;group&gt;</code></dt>
+                                    <dd>Execute a group of verify tests.</dd>
+                                    <dt><code>-test</code> | <code>-se</code> <code>&lt;test&gt;</code></dt>
+                                    <dd>Execute a Verification test.</dd>
+                                    <dt><code>-list-groups</code> | <code>-lig</code></dt>
+                                    <dd>List all the registered verify service groups.</dd>
+                                    <dt><code>-list-tests</code> | <code>-lit</code></dt>
+                                    <dd>If a group is supplied will list all the verify tests in that group, otherwise will list all verify tests registered.</dd>
+                                    <dt><code>-debug</code> | <code>-de</code></dt>
+                                    <dd>Enable debug information in the output.</dd>
+                                    <dt><code>-verbose</code> | <code>-v</code></dt>
+                                    <dd>Show additional details about the current process.</dd>
+                                    </dl>
+    </div>
+</div>
+</div>
+
+<!-- Help commands section -->
+<h2 class="section-subheading help-commands-heading">Help Commands</h2>
+<div class="help-columns">
+<!-- First row -->
+<div class="command-block">
+<h3><code>help project examples</code></h3>
+<div>
+      The <code>project</code> command supports several subcommands which create a project,
+      export objects from users, generate diffs between versions, generate a release of the changes,
+      generate an artifact with all the changes for the release, and deploy an artifact to a database.
+</div>
+<div class="section-title" style="margin-top: 1.3em;">Examples:</div>
+<ul style="margin: 1em 0 0 0; list-style: none; padding: 0;">
+<li style="margin-bottom: .7em;"><strong>Project init command:</strong><br>
+    <div style="margin-top: .35em;">
+<code>SQL&gt; project init -name demoproject -schemas hr -verbose</code>
+    </div>
+</li>
+<li style="margin-bottom: .7em;"><strong>Project export command:</strong><br>
+    <div style="margin-top: .35em;">
+<code>SQL&gt; project export -schemas hr</code>
+    </div>
+</li>
+<li style="margin-bottom: .7em;"><strong>Project stage command:</strong><br>
+    <div style="margin-top: .35em;">
+<code>SQL&gt; project stage -verbose</code>
+    </div>
+</li>
+<li style="margin-bottom: .7em;"><strong>Project release command:</strong><br>
+    <div style="margin-top: .35em;">
+<code>SQL&gt; project release -version 1.0</code>
+    </div>
+</li>
+<li style="margin-bottom: .7em;"><strong>Project gen_artifacts command:</strong><br>
+    <div style="margin-top: .35em;">
+<code>SQL&gt; project gen_artifacts -name demo -version 1.0 -format zip</code>
+    </div>
+</li>
+<li><strong>Project deploy command:</strong><br>
+    <div style="margin-top: .35em;">
+<code>SQL&gt; project deploy -file demo_1.0.zip</code>
+    </div>
+</li>
+</ul>
+</div>
+<div class="command-block">
+<h3><code>help project init examples</code></h3>
+<ul style="margin: 1em 0 0 0; list-style: none; padding: 0;">
+<li style="margin-bottom: .7em;">
+        Initialize a project named <strong>"apexsb"</strong>, linked to the <strong>"apexsb_data"</strong> and <strong>"apexsb"</strong> schemas,
+        within the directory <strong>/workspace/projects/</strong>, and using the connection name <strong>apexsb_conn</strong>:
+<div style="margin-top: .35em;">
+<code>SQL&gt; project init -name apexsb -schemas apexsb_data,apexsb -d /workspace/projects -con apexsb_conn</code>
+</div>
+</li>
+</ul>
+</div>
+<div class="command-block">
+<h3><code>help project gen-artifact examples</code></h3>
+<ul style="margin: 1em 0 0 0; list-style: none; padding: 0;">
+<li>
+        Generate an artifact named <strong>R1-1</strong> in zip format. The artifact is saved in the artifact folder,
+        which will be created if it does not exist
+        <div style="margin-top: .35em;">
+<code>SQL&gt; project gen-artifact -name R1 -version 1 -format zip -verbose</code>
+        </div>
+
+</li>
+</ul>
+</div>
+<!-- Second row -->
+<div class="command-block">
+<h3><code>help project config examples</code></h3>
+<ul style="margin: 1em 0 0 0; list-style: none; padding: 0;">
+<li style="margin-bottom: .7em;">
+        List all configuration parameters within the project and their values in a table format<br>
+        <div style="margin-top: .35em;">
+<code>SQL&gt; project config -list</code>
+        </div>
+</li>
+<li style="margin-bottom: .7em;">
+        List the configuration for the <strong>sqlcl.version</strong> parameter. Use <strong>-verbose</strong> to include default value and description<br>
+        <div style="margin-top: .35em;">
+<code>SQL&gt; project config -list -name sqlcl.version -verbose</code>
+        </div>
+
+</li>
+<li>
+        List all configuration parameters that include the specified name <strong>stage</strong><br>
+        <div style="margin-top: .35em;">
+<code>SQL&gt; project config -list -name stage -verbose</code>
+        </div>
+</li>
+</ul>
+</div>
+<div class="command-block">
+<h3><code>help project deploy examples</code></h3>
+<ul style="margin: 1em 0 0 0; list-style: none; padding: 0;">
+<li>Extract the artifact file from the specified path, execute <code>@dist/install.sql</code>,
+        and initiate the Liquibase installer on the target database<br>
+        <div style="margin-top: .35em;">
+<code>SQL&gt; project deploy -file /Users/user1/Desktop/project1/artifact/R1-1.zip -verbose</code>
+        </div>
+</li>
+</ul>
+</div>
+<div class="command-block">
+<h3><code>help project export examples</code></h3>
+<ul style="margin: 1em 0 0 0; list-style: none; padding: 0;">
+<li style="margin-bottom: .7em;">
+        Examples of custom export filters from<br>
+        <div style="margin-top: .35em;">
+<code>.dbtools/filters/project.filters</code><br>
+        </div>
+        <div style="margin-top: 1em;">
+<code>SQL&gt; project export -debug -list -objects REGIONS,COUNTRIES -schemas HR,SCOTT -threads 4</code>
+        </div>
+</li>
+<li>
+        Export a specific Apex application:<br>
+        <div style="margin-top: .35em;">
+<code>SQL&gt; project export -objects APEX.100 -schemas APEXUSER</code>
+        </div>
+</li>
+</ul>
+</div>
+<!-- Third row -->
+<div class="command-block">
+<h3><code>help project verify examples</code></h3>
+<ul style="margin: 1em 0 0 0; list-style: none; padding: 0;">
+<li>
+        Run verification tests on your project<br>
+        <div style="margin-top: .35em;">
+<code>SQL&gt; project verify</code>
+        </div>
+
+</li>
+<li>
+        Execute a specific verification test<br>
+        <div style="margin-top: .35em;">
+<code>SQL&gt; project verify -test &lt;name&gt;</code>
+        </div>
+
+</li>
+<li>
+        Execute verification tests for a specified group<br>
+        <div style="margin-top: .35em;">
+<code>SQL&gt; project verify -group &lt;name&gt;</code>
+        </div>
+</li>
+<li>
+        List all registered verification tests<br>
+         <div style="margin-top: .35em;">
+<code>SQL&gt; project verify -list-tests</code>
+         </div>
+
+</li>
+<li>
+        List all registered verification test groups<br>
+        <div style="margin-top: .35em;">
+<code>SQL&gt; project verify -list-groups</code>
+        </div>
+</li>
+</ul>
+</div>
+<div class="command-block">
+<h3><code>help project stage examples</code></h3>
+<ul style="margin: 1em 0 0 0; list-style: none; padding: 0;">
+<li style="margin-bottom: .7em;">
+        Create a new directory under <strong>dist/releases/next</strong> based on the current branch name.
+        It adds changelogs and changesets to the folder by diffing files in the current branch and the "from" branch.
+        If no branch specified, it uses the default from the config <strong>stage.branch</strong> parameter<br>
+        <div style="margin-top: .35em;">
+<code>SQL&gt; project stage</code>
+        </div>
+</li>
+<li style="margin-bottom: .7em;">
+        Create a new directory under <strong>dist/releases/next</strong> based on the current branch name.
+        Adds changelogs and changesets by diffing files in the current branch and the "from" branch.
+        Here, the "from" branch is specified as "<strong>dev</strong>"<br>
+         <div style="margin-top: .35em;">
+<code>SQL&gt; project stage -branch-name dev</code>
+         </div>
+</li>
+<li>
+        Create a new directory under <strong>dist/releases/next</strong> specifying the branch name<br>
+        <div style="margin-top: .35em;">
+<code>SQL&gt; project stage -branch-name branch1</code>
+        </div>
+</li>
+</ul>
+</div>
+<div class="command-block">
+<h3><code>help project release examples</code></h3>
+<ul style="margin: 1em 0 0 0; list-style: none; padding: 0;">
+<li>
+        To package a unit of work into a release:<br>
+        <div style="margin-top: .35em;">
+<code>SQL&gt; project release -version 1.0</code>
+        </div>
+</li>
+</ul>
+</div>
+</div>
+</body>
+</html>
