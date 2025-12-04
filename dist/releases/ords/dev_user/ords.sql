@@ -1,5 +1,5 @@
 -- liquibase formatted sql
--- changeset DEV_USER:1764873023247 stripComments:false  logicalFilePath:ords/dev_user/ords.sql
+-- changeset DEV_USER:1764879234123 stripComments:false  logicalFilePath:ords/dev_user/ords.sql
 -- sqlcl_snapshot {"hash":"e3a6e9887bfb395c7de6c119b1fd86c162a154ba","type":"ORDS_SCHEMA","name":"ords","schemaName":"DEV_USER","sxml":""}
 --
         
