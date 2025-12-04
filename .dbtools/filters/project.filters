@@ -31,6 +31,7 @@ object_type != 'TABLE' or object_name not in ('DATABASECHANGELOG',
                                               ),
 not (object_type = 'VIEW'    and object_name ='DATABASECHANGELOG_DETAILS'),
 not (object_type = 'TRIGGER' and object_name ='DATABASECHANGELOG_ACTIONS_TRG'),
+not (object_name like 'DBTOOLS$%'),
 
 
 -- DM generated tables
